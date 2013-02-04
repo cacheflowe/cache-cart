@@ -1,0 +1,318 @@
+{
+    "config": {
+        "cart-title": "Cache Cart Shopping Zone",
+        "paypal-email": "mail@plasticsoundsupply.com"
+    },
+    "products": {
+        "PSS002": {
+            "title": "The Reprogramming Project CD",
+            "price": 13,
+            "shipping": {
+                "first": 2,
+                "next": 1,
+                "first-intl": 2,
+                "next-intl": 1,
+                "increment": 5
+            },
+            "url": "http://plasticsoundsupply.com/release/the_reprogramming_project/",
+            "inventory": 30
+        },
+        "PSS003": {
+            "title": "CacheFlowe - Cache, Stacks & Queues CD",
+            "price": 7,
+            "shipping": {
+                "first": 1.5,
+                "next": 1,
+                "first-intl": 2.5,
+                "next-intl": 1,
+                "increment": 5
+            },
+            "url": "http://plasticsoundsupply.com/release/cacheflowe_-_cache_stacks_and_queues/",
+            "inventory": 58
+        },
+        "PSS004": {
+            "title": "Wentworth Kersey - O",
+            "price": 5,
+            "shipping": {
+                "first": 2,
+                "next": 2,
+                "first-intl": 3,
+                "next-intl": 3,
+                "increment": 1
+            },
+            "url": "http://plasticsoundsupply.com/release/wentworth_kersey_-_o",
+            "inventory": 30
+        },
+        "PSS005": {
+            "title": "Scaffolding - Narratives",
+            "price": 12,
+            "shipping": {
+                "first": 1.5,
+                "next": 1,
+                "first-intl": 3,
+                "next-intl": 1,
+                "increment": 5
+            },
+            "url": "http://plasticsoundsupply.com/release/scaffolding_-_narratives/",
+            "inventory": 0
+        },
+        "PSS006": {
+            "title": "Wentworth Kersey - (O)",
+            "price": 5,
+            "shipping": {
+                "first": 2,
+                "next": 2,
+                "first-intl": 3,
+                "next-intl": 3,
+                "increment": 1
+            },
+            "url": "http://plasticsoundsupply.com/release/wentworth_kersey_-_(o)/",
+            "inventory": 0
+        },
+        "PSS008": {
+            "title": "George and Caplin - Secluded Malls and Scenic Byways...",
+            "price": 10,
+            "shipping": {
+                "first": 2,
+                "next": 2,
+                "first-intl": 4,
+                "next-intl": 4,
+                "increment": 1
+            },
+            "url": "http://plasticsoundsupply.com/release/george_and_caplin_-_secluded_malls_and_scenic_byways/",
+            "inventory": 50
+        },
+        "PSS009": {
+            "title": "Wentworth Kersey - ((O))",
+            "price": 5,
+            "shipping": {
+                "first": 2,
+                "next": 2,
+                "first-intl": 3,
+                "next-intl": 3,
+                "increment": 1
+            },
+            "url": "http://plasticsoundsupply.com/release/wentworth_kersey_-_((o))/",
+            "inventory": 0
+        },
+        "PSS010": {
+            "title": "Experimental Dance Breaks 36",
+            "price": 10,
+            "shipping": {
+                "first": 2,
+                "next": 2,
+                "first-intl": 3,
+                "next-intl": 3,
+                "increment": 1
+            },
+            "url": "http://plasticsoundsupply.com/release/experimental_dance_breaks_36/",
+            "inventory": 50
+        },
+        "PSS012": {
+            "title": "Iuengliss - Blank Matter",
+            "price": 10,
+            "shipping": {
+                "first": 2,
+                "next": 2,
+                "first-intl": 3,
+                "next-intl": 3,
+                "increment": 1
+            },
+            "url": "http://plasticsoundsupply.com/release/iuengliss_-_blank_matter/",
+            "inventory": 50
+        },
+        "PSS014": {
+            "title": "Jeffrey Wentworth Stevens - Highway Driveway",
+            "price": 5,
+            "shipping": {
+                "first": 2,
+                "next": 2,
+                "first-intl": 3,
+                "next-intl": 3,
+                "increment": 1
+            },
+            "url": "http://plasticsoundsupply.com/release/jeffrey_wentworth_stevens_-_highway_driveway/",
+            "inventory": 50
+        },
+        "PSS_CMYK_M": {
+            "title": "CMYK T-Shirt [medium]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 0
+        },
+        "PSS_CMYK_L": {
+            "title": "CMYK T-Shirt [large]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 0
+        },
+        "PSS_CMYK_XL": {
+            "title": "CMYK T-Shirt [x-large]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 0
+        },
+        "PSS_TOYGUNS_M_M": {
+            "title": "Toy Guns T-Shirt [mens medium / kelly green]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 6
+        },
+        "PSS_TOYGUNS_M_L": {
+            "title": "Toy Guns T-Shirt [mens large / kelly green]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 0
+        },
+        "PSS_TOYGUNS_M_XL": {
+            "title": "Toy Guns T-Shirt [mens x-large / kelly green]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 2
+        },
+        "PSS_TOYGUNS_W_S": {
+            "title": "Toy Guns T-Shirt [womens small / sage]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 4
+        },
+        "PSS_TOYGUNS_W_M": {
+            "title": "Toy Guns T-Shirt [womens medium / sage]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 4
+        },
+        "PSS_TOYGUNS_W_M_KG": {
+            "title": "Toy Guns T-Shirt [womens medium / kelly green]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 1
+        },
+        "PSS_TOYGUNS_W_L": {
+            "title": "Toy Guns T-Shirt [womens large / sage]",
+            "price": 20,
+            "shipping": {
+                "first": 3,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 5
+        },
+        "PSS_ANAGRAM_XS": {
+            "title": "Anagram T-Shirt [x-small]",
+            "price": 20,
+            "shipping": {
+                "first": 2,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 5
+        },
+        "PSS_ANAGRAM_S": {
+            "title": "Anagram T-Shirt [small]",
+            "price": 20,
+            "shipping": {
+                "first": 2,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 10
+        },
+        "PSS_ANAGRAM_M": {
+            "title": "Anagram T-Shirt [medium]",
+            "price": 20,
+            "shipping": {
+                "first": 2,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 15
+        },
+        "PSS_ANAGRAM_L": {
+            "title": "Anagram T-Shirt [large]",
+            "price": 20,
+            "shipping": {
+                "first": 2,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 15
+        },
+        "PSS_ANAGRAM_XL": {
+            "title": "Anagram T-Shirt [x-large]",
+            "price": 20,
+            "shipping": {
+                "first": 2,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "inventory": 10
+        }
+    }
+}

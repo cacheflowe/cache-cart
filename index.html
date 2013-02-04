@@ -7,6 +7,7 @@
     <meta name="description" content="cache-cart : Simple, static PayPal shopping cart for easy front-end implementation" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link href="cart/cache-cart.css" media="screen" rel="stylesheet" type="text/css" />
 
     <title>cache-cart</title>
   </head>
@@ -18,8 +19,8 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/cacheflowe/cache-cart">View on GitHub</a>
 
-          <h1 id="project_title">cache-cart</h1>
-          <h2 id="project_tagline">Simple, static PayPal shopping cart for easy front-end implementation</h2>
+          <h1 id="project_title">Cache Cart</h1>
+          <h2 id="project_tagline">A simple, static PayPal shopping cart for easy front-end implementation</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/cacheflowe/cache-cart/zipball/master">Download this project as a .zip file</a>
@@ -31,14 +32,11 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <h3>Demo:</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+        <p>Try the demo links below to see what the cart looks like:</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+        <pre><ul></ul></pre>
       </section>
     </div>
 
@@ -50,7 +48,23 @@ $ git checkout gh-pages
       </footer>
     </div>
 
-    
+    <script src="cart/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="cart/cache-cart.js" type="text/javascript"></script>
+    <script>
+      // initialize the cart with your json product data
+      window.cacheCart.init('cart/products.json');
+    </script>
+    <script>
+      // for demo purposes, write out the links, but wait for the product json to load
+      setTimeout(function(){
+        var linkList = $('ul');
+        var products = window.cacheCart.getProducts();
+        for( var product in products ) {
+          linkList.append('<li><a href="javascript:window.cacheCart.addItem(\'' + product + '\');">' + product + '</a></li>');
+        }
+      },1000);
+    </script>
+
 
   </body>
 </html>
