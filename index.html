@@ -14,14 +14,15 @@
     <section class='main'>
       <h1>This is a web site</h1>
       <h3>With not much content</h3>
-      <div><a href="javascript:window.cacheCart.cart.addItem('PSS002');">Add PSS002</a></div>
-      <div><a href="javascript:window.cacheCart.cart.addItem('PSS003');">Add PSS003</a></div>
-      <div><a href="javascript:window.cacheCart.cart.addItem('PSS004');">Add PSS004</a></div>
+      <div><a href="javascript:window.cacheCart.addItem('PSS002');">Add PSS002</a></div>
+      <div><a href="javascript:window.cacheCart.addItem('PSS003');">Add PSS003</a></div>
+      <div><a href="javascript:window.cacheCart.addItem('PSS004');">Add PSS004</a></div>
+      <div><a href="javascript:window.cacheCart.addItem('PSS006');">Add PSS006</a></div>
     </section>
     <script src="./jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="./cache-cart.js" type="text/javascript"></script>
     <script>
-      window.cacheCart.cart.init('./products.json');
+      window.cacheCart.init('./products.json');
     </script>
   </body>
 </html>
