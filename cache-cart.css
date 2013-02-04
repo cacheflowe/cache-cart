@@ -1,0 +1,139 @@
+/* set container and default display css */
+#cacheCart {
+  color: #000000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height:20px;
+  background-color: #FFFFFF;
+  border-bottom: solid black 1px;
+  padding: 5px 0px 20px 0px;
+  width: 100%;
+  text-align: center;
+}
+
+#cacheCart.hidden {
+  display: none;
+  background-color: #FF0000;
+}
+
+#cacheCartInner {
+  text-align: left;
+  margin: 0 auto;
+  color: #000000;
+  padding: 5px;
+  max-width: 800px;
+}
+
+/* cart title */
+#cacheCart #cacheCartTitle {
+  font-size:20px;
+  line-height:20px;
+  margin-bottom:10px;
+}
+
+#cacheCartProducts {
+  border-top: solid black 1px;
+  border-bottom: solid black 1px;
+}
+
+#cacheCart div, 
+#cacheCart table, 
+#cacheCart td {
+  color:#000000;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+#cacheCart a {
+  color:#ff2a2a;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight:normal;
+  text-decoration:none;
+}
+#cacheCart a:hover {
+  color:#ff2a2a;
+  font-family:Arial, Helvetica, sans-serif;
+  text-decoration:none;
+  font-weight:normal;
+}
+
+/* item row styles */
+.cacheCartItem {
+  width: 100%;
+  line-height: 30px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.cacheCartItemDescription {
+  padding-right: 65px;
+  float: left;
+}
+
+.cacheCartProductActions {
+  width: 65px;
+  margin-left: -65px;
+  float: right;
+}
+
+.cacheCartProductActions a, 
+.cacheCartProductActions a:hover {
+  font-size:14px;
+  line-height:14px;
+  padding: 2px 8px;
+  margin-left: 8px;
+  font-weight:bold;
+  border: 1px solid #000000;
+  border-radius: 3px;
+}
+
+
+/* total price row styles */
+#cacheCartTotal {
+  font-weight:bold;
+  text-align:right;
+  height:34px;
+  line-height:34px;
+}
+
+/* action links */
+#cacheCartActions {
+  margin-top: 10px;
+  text-align:right;
+}
+
+#cacheCartActions a, 
+#cacheCartActions a:hover {
+  font-size:14px;
+  line-height:14px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  font-weight:bold;
+  border: 1px solid #000000;
+  border-radius: 3px;
+}
+
+.cacheCartFooterLink {
+  float:right;
+  margin-left:20px;
+}
+
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+ 
+.clearfix {
+  display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+  display: block;
+}
+ 
+* html .clearfix {
+  height: 1%;
+}
