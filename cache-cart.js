@@ -268,12 +268,17 @@
       $(_cartDiv).addClass('hidden');
     };
 
+    var getProducts = function() {
+      return _productsData;
+    };
+
     return {
       init: init,
       addItem: addItem,
       removeItem: removeItem,
       clearCart: clearCart,
-      toggleInternational: toggleInternational
+      toggleInternational: toggleInternational,
+      getProducts: getProducts
     }
   }
 

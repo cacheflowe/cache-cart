@@ -12,17 +12,26 @@
   </head>
   <body>
     <section class='main'>
-      <h1>This is a web site</h1>
-      <h3>With not much content</h3>
-      <div><a href="javascript:window.cacheCart.addItem('PSS002');">Add PSS002</a></div>
-      <div><a href="javascript:window.cacheCart.addItem('PSS003');">Add PSS003</a></div>
-      <div><a href="javascript:window.cacheCart.addItem('PSS004');">Add PSS004</a></div>
-      <div><a href="javascript:window.cacheCart.addItem('PSS006');">Add PSS006</a></div>
+      <h1>Click a product ID to add to the cart</h1>
+      <ul id="storeLinks"></ul>
     </section>
     <script src="./jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="./cache-cart.js" type="text/javascript"></script>
     <script>
+      // initialize the cart with your json product data
       window.cacheCart.init('./products.json');
+    </script>
+    <script>
+      // for demo purposes, write out the links, but wait for the product json to load
+      setTimeout(function(){
+        var linkList = $('ul');
+        var products = window.cacheCart.getProducts();
+        console.log(linkList );
+        console.log(products );
+        for( var product in products ) {
+          linkList.append('<li><a href="javascript:window.cacheCart.addItem(\'' + product + '\');">' + product + '</a></li>');
+        }
+      },1000);
     </script>
   </body>
 </html>
