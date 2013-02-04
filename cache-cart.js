@@ -187,7 +187,6 @@
       htmlStr += '<div class="cacheCartTotal">Total: $' + window.cacheCart.Formatter.formatDollarsCents( totalWithShipping )+ '</div>';
 
       htmlStr += '<div id="cacheCartActions">';
-      htmlStr += '<img src="./credit-cards.gif" align="left">';
       // htmlStr += '<a href="javascript:window.cacheCart.clearCart();">Clear Cart</a>';
       htmlStr += '<a target="_blank" href="';
       htmlStr += getCheckoutLink();
