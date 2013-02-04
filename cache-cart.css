@@ -93,6 +93,10 @@
   font-weight: normal;
 }
 
+.cacheCartUnderline {
+  padding-bottom: 3px;
+  border-bottom: 1px solid #999999;
+}
 
 /* total price row styles */
 .cacheCartSubTotal {

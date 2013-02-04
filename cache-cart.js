@@ -6,7 +6,8 @@
         _isOpen = false,
         _items = {},
         _isInternationalShipping = false,
-        _cookieKey = 'cacheCart';
+        _cookieKey = 'cacheCart',
+        _cookieKeyIntl = 'cacheCartIntl';
 
     var init = function( cartJSON ) {
       createCartElement();
@@ -33,6 +34,12 @@
     var cartDataLoaded = function( data ) {
       _cartConfig = data.config;
       _productsData = data.products;
+
+      // set international cookie
+      var storedInternational = window.cacheCart.Cookie.get( _cookieKeyIntl );
+      _isInternationalShipping = ( storedInternational == 'true' ) ? true : false;
+      if( _isInternationalShipping ) $('#cacheCartInternational').attr('checked','checked');
+
       // pull local storage if needed
       var storedCartData = window.cacheCart.Cookie.get( _cookieKey );
       if( storedCartData && storedCartData != '' ) {
@@ -95,7 +102,6 @@
         if( serialStorage != '' ) serialStorage += '|';
         serialStorage += itemId+','+itemQuantity
       }
-      console.log('serialStorage',serialStorage);
       window.cacheCart.Cookie.set( _cookieKey, serialStorage );
     };
 
@@ -103,6 +109,12 @@
       var num = 0;
       for(var item in _items) num++;
       return num;
+    };
+
+    var toggleInternational = function( el ) {
+      _isInternationalShipping = el.checked;
+      window.cacheCart.Cookie.set( _cookieKeyIntl, _isInternationalShipping );
+      drawCart();
     };
 
     var drawCart = function() {
@@ -169,8 +181,9 @@
 
       htmlStr += '</div>';
 
+      htmlStr += '<div class="cacheCartSubTotal cacheCartUnderline"><label for="cacheCartInternational">This order is shipping outside the USA </label><input type="checkbox" id="cacheCartInternational" onclick="window.cacheCart.toggleInternational(this);"></div>';
       htmlStr += '<div class="cacheCartSubTotal">Items total: $' + window.cacheCart.Formatter.formatDollarsCents( priceTotal ) + '</div>';
-      htmlStr += '<div class="cacheCartSubTotal">Shipping: $' + window.cacheCart.Formatter.formatDollarsCents( shippingTotal ) + '</div>';
+      htmlStr += '<div class="cacheCartSubTotal cacheCartUnderline">Shipping: $' + window.cacheCart.Formatter.formatDollarsCents( shippingTotal ) + '</div>';
       htmlStr += '<div class="cacheCartTotal">Total: $' + window.cacheCart.Formatter.formatDollarsCents( totalWithShipping )+ '</div>';
 
       htmlStr += '<div id="cacheCartActions">';
@@ -184,6 +197,9 @@
       htmlStr += '</div>';
 
       $(_cartDiv).html(htmlStr);
+
+      // set international checkbox
+      if( _isInternationalShipping == true ) $('#cacheCartInternational').attr('checked','checked');
     };
 
     var getCheckoutLink = function() {
@@ -209,8 +225,7 @@
         var itemShippingTotal = calcShippingForProduct( product, itemQuantity );
 
         // add standard options to the address
-        var intlTextAdd = "";
-        // if( $cartObj['intl'] == "true" ) { $intlTextAdd = " [intl]"; }
+        var intlTextAdd = ( _isInternationalShipping == true ) ? ' (international)' : '';
         checkoutLink += '&item_name_' + counter + '=' + escape( product['title'] + intlTextAdd );
         checkoutLink += '&item_number_' + counter + '=' + itemId;
         checkoutLink += '&quantity_' + counter + '=' + itemQuantity;
@@ -257,7 +272,8 @@
       init: init,
       addItem: addItem,
       removeItem: removeItem,
-      clearCart: clearCart
+      clearCart: clearCart,
+      toggleInternational: toggleInternational
     }
   }
 
