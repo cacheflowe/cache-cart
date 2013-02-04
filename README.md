@@ -1,5 +1,5 @@
 # Cache Cart
-A simple Javascript-powered PayPal shopping cart that doesn't require any back end code.
+A simple Javascript-powered PayPal shopping cart that doesn't require any back end code. Check out the [demo](http://cacheflowe.github.com/cache-cart/).
 #### Instructions:
 ###### Import the css: 
 	<link href="./cache-cart.css" media="screen" rel="stylesheet" type="text/css" />
