@@ -56,7 +56,9 @@
     var addItem = function( itemId ) {
       // update cart items count
       if( _items[itemId] ) {
-        _items[itemId]++;
+        if( _items[itemId] < getLimitForProduct( _productsData[itemId] ) ) {
+          _items[itemId]++;
+        }
       } else {
         _items[itemId] = 1;
       }
@@ -90,6 +92,7 @@
 
     var clearCart = function() {
       for(var item in _items) delete _items[item];
+      storeCart();
       hideCart();
     };
 
@@ -254,6 +257,14 @@
       }
 
       return shipping;
+    };
+
+    var getLimitForProduct = function( product ) {
+      if( product['limit'] !== undefined ) {
+        return product['limit'];
+      } else {
+        return 9999999;
+      }
     };
 
     var showCart = function() {

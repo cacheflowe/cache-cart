@@ -26,11 +26,10 @@
       setTimeout(function(){
         var linkList = $('ul');
         var products = window.cacheCart.getProducts();
-        console.log(linkList );
-        console.log(products );
         for( var product in products ) {
           linkList.append('<li><a href="javascript:window.cacheCart.addItem(\'' + product + '\');">' + product + '</a></li>');
         }
+        linkList.append('<li><a href="javascript:window.cacheCart.addItem(\'PSS009\'); window.cacheCart.addItem(\'PSS_PRINT_SHIPPING\');">Product with external, shared shipping</a></li>');
       },1000);
     </script>
   </body>

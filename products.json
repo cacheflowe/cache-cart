@@ -1,7 +1,7 @@
 {
     "config": {
         "cart-title": "Cache Cart Shopping Zone",
-        "paypal-email": "mail@plasticsoundsupply.com"
+        "paypal-email": "mail@your-company.com"
     },
     "products": {
         "PSS002": {
@@ -312,6 +312,19 @@
                 "next-intl": 2,
                 "increment": 5
             },
+            "inventory": 10
+        },
+        "PSS_PRINT_SHIPPING": {
+            "title": "Shipping for prints",
+            "price": 20,
+            "shipping": {
+                "first": 2,
+                "next": 1,
+                "first-intl": 5,
+                "next-intl": 2,
+                "increment": 5
+            },
+            "limit": 1,
             "inventory": 10
         }
     }
