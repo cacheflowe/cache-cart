@@ -84,7 +84,7 @@
         var productId = span.getAttribute('data-cachecart-inventory');
         if(productId) {
           span.innerHTML = _productsData[productId].inventory;
-          if(_productsData[productId].inventory == 0) link.setAttribute('data-cachecart-inventory-none', 'true');
+          if(_productsData[productId].inventory == 0) span.setAttribute('data-cachecart-inventory-none', 'true');
         }
       }
     };
@@ -99,10 +99,26 @@
     };
 
     var updateInvetoryDisplay = function(itemId) {
+      // update inventory numbers
       var itemInventoryDisplays = document.querySelectorAll('[data-cachecart-inventory="'+itemId+'"]');
       for(var i=0; i < itemInventoryDisplays.length; i++) {
         var span = itemInventoryDisplays[i];
         span.innerHTML = _productsData[itemId].inventory;
+        if(_productsData[itemId].inventory == 0) {
+          span.setAttribute('data-cachecart-inventory-none', 'true');
+        } else {
+          span.removeAttribute('data-cachecart-inventory-none');
+        }
+      }
+      // update buttons so we can style them
+      var itemButtons = document.querySelectorAll('[data-cachecart-buy-link="'+itemId+'"]');
+      for(var i=0; i < itemButtons.length; i++) {
+        var link = itemButtons[i];
+        if(_productsData[itemId].inventory == 0) {
+          link.setAttribute('data-cart-sold-out', 'true');
+        } else {
+          link.removeAttribute('data-cart-sold-out');
+        }
       }
     };
 
