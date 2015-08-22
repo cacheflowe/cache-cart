@@ -6,10 +6,14 @@
         _isOpen = false,
         _items = {},
         _isInternationalShipping = false,
+        _intlCheckBox = null,
         _cookieKey = 'cacheCart',
-        _cookieKeyIntl = 'cacheCartIntl';
+        _cookieKeyIntl = 'cacheCartIntl',
+        _cartCookieLoaded = false,
+        _loadedCallback = null;
 
-    var init = function( cartJSON ) {
+    var init = function( cartJSON, loadedCallback ) {
+      _loadedCallback = loadedCallback;
       createCartElement();
       loadCartData( cartJSON );
     };
@@ -19,11 +23,11 @@
       _cartDiv = document.createElement("div");
       _cartDiv.setAttribute('id','cacheCart');
       _cartDiv.setAttribute('class','hidden');
-      $(document.body).prepend(_cartDiv);
+      document.body.insertBefore(_cartDiv, document.body.childNodes[0]);
     };
 
     var loadCartData = function( cartJSON ) {
-      $.ajax({
+      window.reqwest({
         dataType: "json",
         url: cartJSON,
         data: null,
@@ -35,20 +39,97 @@
       _cartConfig = data.config;
       _productsData = data.products;
 
-      // set international cookie
+      // get international cookie for initial cart draw
       var storedInternational = window.cacheCart.Cookie.get( _cookieKeyIntl );
       _isInternationalShipping = ( storedInternational == 'true' ) ? true : false;
-      if( _isInternationalShipping ) $('#cacheCartInternational').attr('checked','checked');
 
       // pull local storage if needed
+      var hasProducts = false;
       var storedCartData = window.cacheCart.Cookie.get( _cookieKey );
       if( storedCartData && storedCartData != '' ) {
         var items = storedCartData.split('|');
-        for( var i=0; i < items.length; i++ ) {
-          _items[items[i].split(',')[0]] = items[i].split(',')[1];
+        for(var i=0; i < items.length; i++) {
+          var productData = items[i].split(',');
+          var itemId = productData[0];
+          var itemCount = parseInt(productData[1]);
+          for(var j = 0; j < itemCount; j++) {
+            hasProducts = true;
+            window.cacheCart.addItem(itemId);
+          }
         }
+      }
+      if(hasProducts) {
         showCart();
         drawCart();
+      }
+      _cartCookieLoaded = true;
+
+      // loaded callback
+      if(_loadedCallback != null) _loadedCallback();
+    };
+
+    var buyLinkClicked = function(e) {
+      e.preventDefault();
+      var productId = e.target.getAttribute('data-cachecart-buy-link');
+      if(_productsData[productId].inventory > 0) {
+        window.cacheCart.addItem(productId);
+      }
+    };
+
+    var parseLinks = function(el) {
+      // activate links to buy products, based on data attributes
+      var cartBuyLinks = el.querySelectorAll('[data-cachecart-buy-link]');
+      for(var i=0; i < cartBuyLinks.length; i++) {
+        var link = cartBuyLinks[i];
+        var productId = link.getAttribute('data-cachecart-buy-link');
+        if(link.getAttribute('data-cart-active') != true) {
+          link.addEventListener('click', buyLinkClicked);
+          link.setAttribute('data-cart-active', 'true');
+          if(_productsData[productId].inventory == 0) link.setAttribute('data-cart-sold-out', 'true');
+        }
+      }
+      // fill in inventory where needed, based on data attributes
+      var cartInventoryCounts = el.querySelectorAll('[data-cachecart-inventory]');
+      for(var i=0; i < cartInventoryCounts.length; i++) {
+        var span = cartInventoryCounts[i];
+        var productId = span.getAttribute('data-cachecart-inventory');
+        if(productId) {
+          span.innerHTML = _productsData[productId].inventory;
+          if(_productsData[productId].inventory == 0) span.setAttribute('data-cachecart-inventory-none', 'true');
+        }
+      }
+    };
+
+    var disposeLinks = function(el) {
+      // activate links to buy products, based on data attributes
+      var cartBuyLinks = el.querySelectorAll('[data-cachecart-buy-link]');
+      for(var i=0; i < cartBuyLinks.length; i++) {
+        var link = cartBuyLinks[i];
+        link.removeEventListener('click', buyLinkClicked);
+      }
+    };
+
+    var updateInvetoryDisplay = function(itemId) {
+      // update inventory numbers
+      var itemInventoryDisplays = document.querySelectorAll('[data-cachecart-inventory="'+itemId+'"]');
+      for(var i=0; i < itemInventoryDisplays.length; i++) {
+        var span = itemInventoryDisplays[i];
+        span.innerHTML = _productsData[itemId].inventory;
+        if(_productsData[itemId].inventory == 0) {
+          span.setAttribute('data-cachecart-inventory-none', 'true');
+        } else {
+          span.removeAttribute('data-cachecart-inventory-none');
+        }
+      }
+      // update buttons so we can style them
+      var itemButtons = document.querySelectorAll('[data-cachecart-buy-link="'+itemId+'"]');
+      for(var i=0; i < itemButtons.length; i++) {
+        var link = itemButtons[i];
+        if(_productsData[itemId].inventory == 0) {
+          link.setAttribute('data-cart-sold-out', 'true');
+        } else {
+          link.removeAttribute('data-cart-sold-out');
+        }
       }
     };
 
@@ -56,9 +137,19 @@
     var addItem = function( itemId ) {
       // update cart items count
       if( _items[itemId] ) {
-        _items[itemId]++;
+        if( _items[itemId] < getLimitForProduct( _productsData[itemId] ) ) {
+          if(_productsData[itemId].inventory > 0) {
+            _items[itemId]++;
+            _productsData[itemId].inventory--;
+            updateInvetoryDisplay(itemId);
+          }
+        }
       } else {
-        _items[itemId] = 1;
+        if(_productsData[itemId].inventory > 0) {
+          _items[itemId] = 1;
+          _productsData[itemId].inventory--;
+          updateInvetoryDisplay(itemId);
+        }
       }
       // show cart div
       if(!_isOpen) {
@@ -67,7 +158,7 @@
       // update html
       drawCart();
       storeCart();
-      $("html, body").animate({ scrollTop: 0 }, 500);
+      scrollToTop(700);
     };
 
     // decrement product count
@@ -75,7 +166,9 @@
       // update cart items count
       if( _items[itemId] ) {
         _items[itemId]--;
-      } 
+        _productsData[itemId].inventory++;
+        updateInvetoryDisplay(itemId);
+      }
       if( _items[itemId] == 0 ) {
         delete _items[itemId];
       }
@@ -90,10 +183,12 @@
 
     var clearCart = function() {
       for(var item in _items) delete _items[item];
+      storeCart();
       hideCart();
     };
 
     var storeCart = function() {
+      if(_cartCookieLoaded == false) return;
       var serialStorage = '';
       for(var item in _items) {
         var itemId = item;
@@ -122,7 +217,7 @@
       var shippingTotal = 0;
       var priceTotal = 0;
       var totalWithShipping = 0;
-    
+
       // loop through cart items, adding up cost
       for(var item in _items) {
         var itemId = item;
@@ -136,13 +231,13 @@
 
       // calculate total order price w/shipping
       totalWithShipping = priceTotal + shippingTotal;
-    
+
       // print table
       var htmlStr = '';
       htmlStr += '<div id="cacheCartInner">';
       htmlStr += '<div id="cacheCartTitle">' + _cartConfig['cart-title'] + '</div>';
-      htmlStr += '<div id="cacheCartProducts">';            
-            
+      htmlStr += '<div id="cacheCartProducts">';
+
       // loop through all cart items
       for(var item in _items) {
         var itemId = item;
@@ -150,11 +245,11 @@
         var product = _productsData[itemId];
 
         // calc product price
-        var priceTimesQuantity = product['price'] * itemQuantity; 
+        var priceTimesQuantity = product['price'] * itemQuantity;
 
         // calculate product shipping
         // var productShipping = calcShippingForProduct( product, itemQuantity );
-        
+
         // print item's html
         var productLink = '';
         var productLinkClose = '';
@@ -177,28 +272,31 @@
         htmlStr += '</div>';
 
         htmlStr += '</div>';
-      }  
+      }
 
       htmlStr += '</div>';
 
-      htmlStr += '<div class="cacheCartSubTotal cacheCartUnderline"><label for="cacheCartInternational">This order is shipping outside the USA </label><input type="checkbox" id="cacheCartInternational" onclick="window.cacheCart.toggleInternational(this);"></div>';
+      htmlStr += '<div class="cacheCartSubTotal cacheCartUnderline"><label for="cacheCartInternational">This order is shipping outside the USA</label> <input type="checkbox" id="cacheCartInternational" onclick="window.cacheCart.toggleInternational(this);"></div>';
       htmlStr += '<div class="cacheCartSubTotal">Items total: $' + window.cacheCart.Formatter.formatDollarsCents( priceTotal ) + '</div>';
       htmlStr += '<div class="cacheCartSubTotal cacheCartUnderline">Shipping: $' + window.cacheCart.Formatter.formatDollarsCents( shippingTotal ) + '</div>';
       htmlStr += '<div class="cacheCartTotal">Total: $' + window.cacheCart.Formatter.formatDollarsCents( totalWithShipping )+ '</div>';
 
       htmlStr += '<div id="cacheCartActions">';
       // htmlStr += '<a href="javascript:window.cacheCart.clearCart();">Clear Cart</a>';
-      htmlStr += '<a target="_blank" href="';
-      htmlStr += getCheckoutLink();
-      htmlStr += '">Check Out</a>';
+      htmlStr += '<a target="_blank" href="' + getCheckoutLink() + '">Check Out</a>';
+      htmlStr += '</div>';
       htmlStr += '</div>';
 
-      htmlStr += '</div>';
-
-      $(_cartDiv).html(htmlStr);
+      _cartDiv.innerHTML = htmlStr;
 
       // set international checkbox
-      if( _isInternationalShipping == true ) $('#cacheCartInternational').attr('checked','checked');
+      _intlCheckBox = document.getElementById('cacheCartInternational');
+      if( _isInternationalShipping ) _intlCheckBox.setAttribute('checked','checked');
+      if( _isInternationalShipping == true ) {
+        _intlCheckBox.setAttribute('checked','checked');
+      } else {
+        _intlCheckBox.removeAttribute('checked');
+      }
     };
 
     var getCheckoutLink = function() {
@@ -211,7 +309,7 @@
       checkoutLink += '&lc=US';
       checkoutLink += '&tax_cart=0';
       checkoutLink += '&handling_cart=0';
-    
+
       // loop through all cart items
       counter = 1; // lets us print the total on the first pass
       for(var item in _items) {
@@ -220,7 +318,7 @@
         var product = _productsData[itemId];
 
         // calc product price and shipping
-        var priceTimesQuantity = product['price'] * itemQuantity; 
+        var priceTimesQuantity = product['price'] * itemQuantity;
         var itemShippingTotal = calcShippingForProduct( product, itemQuantity );
 
         // add standard options to the address
@@ -230,7 +328,7 @@
         checkoutLink += '&quantity_' + counter + '=' + itemQuantity;
         checkoutLink += '&amount_' + counter + '=' + product['price'];
         checkoutLink += '&shipping_' + counter + '=' + itemShippingTotal;
-        
+
         // increment paypal querystring vars
         counter++;
       }
@@ -256,23 +354,52 @@
       return shipping;
     };
 
+    var getLimitForProduct = function( product ) {
+      if( product['limit'] !== undefined ) {
+        return product['limit'];
+      } else {
+        return 9999999;
+      }
+    };
+
     var showCart = function() {
       _isOpen = true;
-      $(_cartDiv).removeClass('hidden');
-
+      _cartDiv.classList.remove('hidden');
     };
 
     var hideCart = function() {
       _isOpen = false;
-      $(_cartDiv).addClass('hidden');
+      _cartDiv.classList.add('hidden');
     };
 
     var getProducts = function() {
       return _productsData;
     };
 
+    // from: http://stackoverflow.com/questions/21474678/scrolltop-animation-without-jquery
+    var scrollToTop = function(scrollDuration) {
+      var scrollHeight = window.scrollY,
+          scrollStep = Math.PI / ( scrollDuration / 15 ),
+          cosParameter = scrollHeight / 2;
+      var scrollCount = 0,
+          scrollMargin;
+      function step () {
+        setTimeout(function() {
+          if ( window.scrollY != 0 ) {
+            requestAnimationFrame(step);
+            scrollCount = scrollCount + 1;
+            scrollMargin = cosParameter - cosParameter * Math.cos( scrollCount * scrollStep );
+            window.scrollTo( 0, ( scrollHeight - scrollMargin ) );
+          }
+        }, 15 );
+      }
+      requestAnimationFrame(step);
+    };
+
     return {
       init: init,
+      parseLinks: parseLinks,
+      disposeLinks: disposeLinks,
       addItem: addItem,
       removeItem: removeItem,
       clearCart: clearCart,
