@@ -158,7 +158,7 @@
       // update html
       drawCart();
       storeCart();
-      scrollToTop(700);
+      if(_cartCookieLoaded == true) scrollToTop(700);
     };
 
     // decrement product count
