@@ -316,11 +316,11 @@
         },
         "PSS_PRINT_SHIPPING": {
             "title": "Shipping for prints",
-            "price": 20,
+            "price": 0,
             "shipping": {
-                "first": 2,
+                "first": 12,
                 "next": 1,
-                "first-intl": 5,
+                "first-intl": 15,
                 "next-intl": 2,
                 "increment": 5
             },
