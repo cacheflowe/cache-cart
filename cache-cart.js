@@ -9,6 +9,7 @@
         _intlCheckBox = null,
         _cookieKey = 'cacheCart',
         _cookieKeyIntl = 'cacheCartIntl',
+        _cartCookieLoaded = false,
         _loadedCallback = null;
 
     var init = function( cartJSON, loadedCallback ) {
@@ -43,15 +44,25 @@
       _isInternationalShipping = ( storedInternational == 'true' ) ? true : false;
 
       // pull local storage if needed
+      var hasProducts = false;
       var storedCartData = window.cacheCart.Cookie.get( _cookieKey );
       if( storedCartData && storedCartData != '' ) {
         var items = storedCartData.split('|');
-        for( var i=0; i < items.length; i++ ) {
-          _items[items[i].split(',')[0]] = items[i].split(',')[1];
+        for(var i=0; i < items.length; i++) {
+          var productData = items[i].split(',');
+          var itemId = productData[0];
+          var itemCount = parseInt(productData[1]);
+          for(var j = 0; j < itemCount; j++) {
+            hasProducts = true;
+            window.cacheCart.addItem(itemId);
+          }
         }
+      }
+      if(hasProducts) {
         showCart();
         drawCart();
       }
+      _cartCookieLoaded = true;
 
       // loaded callback
       if(_loadedCallback != null) _loadedCallback();
@@ -177,6 +188,7 @@
     };
 
     var storeCart = function() {
+      if(_cartCookieLoaded == false) return;
       var serialStorage = '';
       for(var item in _items) {
         var itemId = item;

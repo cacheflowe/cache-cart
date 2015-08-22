@@ -42,5 +42,4 @@ window.cacheCart.disposeLinks(document.body);
 
 #### TODO:
 
-* Decrement inventory when adding to cart
 * Better show/hide solution
