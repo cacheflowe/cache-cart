@@ -98,15 +98,31 @@
       }
     };
 
+    var updateInvetoryDisplay = function(itemId) {
+      var itemInventoryDisplays = document.querySelectorAll('[data-cachecart-inventory="'+itemId+'"]');
+      for(var i=0; i < itemInventoryDisplays.length; i++) {
+        var span = itemInventoryDisplays[i];
+        span.innerHTML = _productsData[itemId].inventory;
+      }
+    };
+
     // store product ID and number added into hash
     var addItem = function( itemId ) {
       // update cart items count
       if( _items[itemId] ) {
         if( _items[itemId] < getLimitForProduct( _productsData[itemId] ) ) {
-          _items[itemId]++;
+          if(_productsData[itemId].inventory > 0) {
+            _items[itemId]++;
+            _productsData[itemId].inventory--;
+            updateInvetoryDisplay(itemId);
+          }
         }
       } else {
-        _items[itemId] = 1;
+        if(_productsData[itemId].inventory > 0) {
+          _items[itemId] = 1;
+          _productsData[itemId].inventory--;
+          updateInvetoryDisplay(itemId);
+        }
       }
       // show cart div
       if(!_isOpen) {
@@ -115,7 +131,7 @@
       // update html
       drawCart();
       storeCart();
-      scrollToTop(1000);
+      scrollToTop(700);
     };
 
     // decrement product count
@@ -123,6 +139,8 @@
       // update cart items count
       if( _items[itemId] ) {
         _items[itemId]--;
+        _productsData[itemId].inventory++;
+        updateInvetoryDisplay(itemId);
       }
       if( _items[itemId] == 0 ) {
         delete _items[itemId];
