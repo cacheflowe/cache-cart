@@ -1,7 +1,9 @@
 {
     "config": {
         "cart-title": "Cache Cart Shopping Zone",
-        "paypal-email": "mail@your-company.com"
+        "paypal-email": "mail@your-company.com",
+        "success-return-url": "http://your-company.com/thank-you",
+        "page-style": null
     },
     "products": {
         "PSS002": {

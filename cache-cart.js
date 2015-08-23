@@ -310,6 +310,8 @@
       checkoutLink += '&lc=US';
       checkoutLink += '&tax_cart=0';
       checkoutLink += '&handling_cart=0';
+      if(_cartConfig['success-return-url'] != null) checkoutLink += '&return=' + _cartConfig['success-return-url'];
+      if(_cartConfig['page-style'] != null) checkoutLink += '&page_style=' + _cartConfig['page-style'];
 
       // loop through all cart items
       counter = 1; // lets us print the total on the first pass

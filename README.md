@@ -16,6 +16,8 @@ A simple Javascript-powered PayPal shopping cart that doesn't require any back e
 ###### Customize the products and configuration in **products.json**
 * Change the `cart-title` to match your site
 * Change the `paypal-email` to link to your PayPal merchant account
+* Change the `page-style` to the name of your non-primary [PayPal page style](https://www.paypal.com/cgi-bin/customerprofileweb?cmd=_profile-page-styles)
+* Change the `success-return-url` to a URL that shoppers will return to after completing a purchase
 
 ###### Load your product data JSON when the site is ready:
 ```
