@@ -185,6 +185,7 @@
       for(var item in _items) delete _items[item];
       storeCart();
       hideCart();
+      window.cacheCart.Cookie.set( _cookieKey, "" );
     };
 
     var storeCart = function() {
